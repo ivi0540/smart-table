@@ -3,6 +3,19 @@ import { createComparison, defaultRules } from "../lib/compare.js";
 // @todo: #4.3 — настроить компаратор
 const compare = createComparison(defaultRules);
 
+// ДОБАВЛЯЕМ ДОПОЛНИТЕЛЬНОЕ ПРАВИЛО ДЛЯ totalFrom И totalTo
+// const customCompare = (row, state) => {
+//   if (state.totalFrom !== undefined && state.totalFrom !== "") {
+//     const from = Number(state.totalFrom);
+//     if (row.total < from) return false;
+//   }
+//   if (state.totalTo !== undefined && state.totalTo !== "") {
+//     const to = Number(state.totalTo);
+//     if (row.total > to) return false;
+//   }
+//   return true;
+// };
+
 export function initFiltering(elements, indexes) {
   // @todo: #4.1 — заполнить выпадающие списки опциями
   Object.keys(indexes) // Получаем ключи из объекта
@@ -38,6 +51,19 @@ export function initFiltering(elements, indexes) {
       }
     }
     // @todo: #4.5 — отфильтровать данные используя компаратор
-    return data.filter(row => compare(row, state));
+
+    // return data.filter((row) => compare(row, state));
+
+    return data.filter((row) => {
+      // totalFrom
+      if (state.totalFrom && state.totalFrom !== "") {
+        if (row.total < Number(state.totalFrom)) return false;
+      }
+      // totalTo
+      if (state.totalTo && state.totalTo !== "") {
+        if (row.total > Number(state.totalTo)) return false;
+      }
+      return compare(row, state);
+    });
   };
 }
