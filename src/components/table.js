@@ -46,7 +46,7 @@ export function initTable(settings, onAction) {
     // ==== INFO ==== ]
 
     const nextRows = data.map((item) => {
-      const row = cloneTemplate(rowTemplate); //получаем копию верстки строки {key: value, ...}
+      const row = cloneTemplate(rowTemplate);
       Object.keys(item).forEach((key) => {
         if (row.elements.hasOwnProperty(key)) {
           row.elements[key].textContent = item[key];

@@ -4,14 +4,13 @@ export const initPagination = (
   { pages, fromRow, toRow, totalRows },
   createPage,
 ) => {
-  const pageTemplate = pages.firstElementChild.cloneNode(true); // ← ДОБАВЬ
-  pages.firstElementChild.remove(); // ← ДОБАВЬ
+  const pageTemplate = pages.firstElementChild.cloneNode(true);
+  pages.firstElementChild.remove();
   let pageCount;
   const applyPagination = (query, state, action) => {
     const limit = state.rowsPerPage;
     let page = state.page;
 
-    // переносим код, который делали под @todo: #2.6
     // @todo: #2.6 — обработать действия
     if (action)
       switch (action.name) {
@@ -38,9 +37,8 @@ export const initPagination = (
   const updatePagination = (total, { page, limit }) => {
     pageCount = Math.ceil(total / limit);
 
-    // переносим код, который делали под @todo: #2.4
     // @todo: #2.4 — получить список видимых страниц и вывести их
-    const visiblePages = getPages(page, pageCount, 5); // Получим массив страниц, которые нужно показать, выводим только 5 страниц
+    const visiblePages = getPages(page, pageCount, 5);
     pages.replaceChildren(
       ...visiblePages.map((pageNumber) => {
         // перебираем их и создаём для них кнопку
@@ -48,9 +46,8 @@ export const initPagination = (
         return createPage(el, pageNumber, pageNumber === page); // вызываем колбэк из настроек, чтобы заполнить кнопку данными
       }),
     );
-    // переносим код, который делали под @todo: #2.5 (обратите внимание, что rowsPerPage заменена на limit)
     // @todo: #2.5 — обновить статус пагинации
-    fromRow.textContent = (page - 1) * limit + 1; // С какой строки выводим
+    fromRow.textContent = (page - 1) * limit + 1;
     toRow.textContent = Math.min(page * limit, total);
     totalRows.textContent = total;
   };

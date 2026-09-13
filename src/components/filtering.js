@@ -1,21 +1,3 @@
-// import { createComparison, defaultRules } from "../lib/compare.js";
-
-// @todo: #4.3 — настроить компаратор
-// const compare = createComparison(defaultRules);
-
-// ДОБАВЛЯЕМ ДОПОЛНИТЕЛЬНОЕ ПРАВИЛО ДЛЯ totalFrom И totalTo
-// const customCompare = (row, state) => {
-//   if (state.totalFrom !== undefined && state.totalFrom !== "") {
-//     const from = Number(state.totalFrom);
-//     if (row.total < from) return false;
-//   }
-//   if (state.totalTo !== undefined && state.totalTo !== "") {
-//     const to = Number(state.totalTo);
-//     if (row.total > to) return false;
-//   }
-//   return true;
-// };
-
 export function initFiltering(elements) {
   const updateIndexes = (elements, indexes) => {
     Object.keys(indexes).forEach((elementName) => {
@@ -31,7 +13,6 @@ export function initFiltering(elements) {
   };
 
   const applyFiltering = (query, state, action) => {
-    // код с обработкой очистки поля
     // @todo: #4.2 — обработать очистку поля
     if (action && action.name === "clear") {
       const wrapper = action.closest(".filter-wrapper");
@@ -55,15 +36,14 @@ export function initFiltering(elements) {
           ["INPUT", "SELECT"].includes(elements[key].tagName) &&
           elements[key].value
         ) {
-          // ищем поля ввода в фильтре с непустыми данными
-          filter[`filter[${elements[key].name}]`] = elements[key].value; // чтобы сформировать в query вложенный объект фильтра
+          filter[`filter[${elements[key].name}]`] = elements[key].value;
         }
       }
     });
 
     return Object.keys(filter).length
       ? Object.assign({}, query, filter)
-      : query; // если в фильтре что-то добавилось, применим к запросу
+      : query;
   };
 
   return {
