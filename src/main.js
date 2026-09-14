@@ -14,7 +14,8 @@ import { initSearching } from "./components/searching.js";
 // @todo: подключение
 
 // Исходные данные используемые в render()
-const api = initData(sourceData);
+// const api = initData(sourceData);
+const api = initData();
 
 /**
  * Сбор и обработка полей из таблицы
@@ -42,12 +43,12 @@ async function render(action) {
   let query = {}; // здесь будут формироваться параметры запроса
   // @todo: использование
 
-  query = applySearching(query, state, action); 
+  query = applySearching(query, state, action);
   query = applyFiltering(query, state, action);
-  query = applySorting(query, state, action); 
-  query = applyPagination(query, state, action); 
+  query = applySorting(query, state, action);
+  query = applyPagination(query, state, action);
   const { total, items } = await api.getRecords(query);
-  updatePagination(total, query); 
+  updatePagination(total, query);
 
   sampleTable.render(items);
 }
@@ -64,7 +65,7 @@ const sampleTable = initTable(
 
 // @todo: инициализация
 const { applyPagination, updatePagination } = initPagination(
-  sampleTable.pagination.elements, 
+  sampleTable.pagination.elements,
   (el, page, isCurrent) => {
     const input = el.querySelector("input");
     const label = el.querySelector("span");
